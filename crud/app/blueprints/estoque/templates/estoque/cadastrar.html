@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Cadastrar Produto{% endblock %}
+
+{% block content %}
+<h2>Cadastrar Novo Produto</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+        {{ form.nome.label(class="form-label") }}
+        {{ form.nome(class="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.descricao.label(class="form-label") }}
+        {{ form.descricao(class="form-control", rows=3) }}
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            {{ form.preco.label(class="form-label") }}
+            {{ form.preco(class="form-control") }}
+        </div>
+        <div class="col">
+            {{ form.quantidade.label(class="form-label") }}
+            {{ form.quantidade(class="form-control") }}
+        </div>
+        <div class="col">
+            {{ form.categoria.label(class="form-label") }}
+            {{ form.categoria(class="form-select") }}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a href="{{ url_for('estoque.listar_produtos') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

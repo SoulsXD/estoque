@@ -1,17 +1,22 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from config import Config
+from app.extensions import db
 
-db = SQLAlchemy()
-
-def create_app():
+def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'segredo'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///banco.db'
+    app.config.from_object(config_class)
+
+    # Inicializa o banco de dados
     db.init_app(app)
 
-    from .routes import main
-    app.register_blueprint(main)
+    # Importa e registra blueprints
+    from app.blueprints.estoque import bp as estoque_bp
+    app.register_blueprint(estoque_bp, url_prefix='/estoque')
 
+    # Importa os modelos para que as tabelas sejam reconhecidas
+    from app.blueprints.estoque.models import Produto
+
+    # Cria as tabelas se não existirem
     with app.app_context():
         db.create_all()
 
