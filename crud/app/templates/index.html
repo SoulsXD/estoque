@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a href="{{ url_for('main.criar') }}">Nova Tarefa</a>
+<ul>
+    {% for tarefa in tarefas %}
+        <li>
+            <strong>{{ tarefa.titulo }}</strong> - {{ tarefa.descricao }}
+            [<a href="{{ url_for('main.editar', id=tarefa.id) }}">Editar</a>]
+            [<a href="{{ url_for('main.deletar', id=tarefa.id) }}">Excluir</a>]
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
